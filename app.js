@@ -64,16 +64,26 @@ app.post("/blog", (req, res) => {
 
 app.get('/blog/:id', (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   Blog.findById(id)
     .then( result => {
-      console.log(result);
       res.render('details', { blog: result, title: "Blog Details"})
     })
     .catch( err => {
       console.log(err)
     }) 
+})
+
+app.delete('/blog/:id' , (req, res) => {
+  const id = req.params.id;
+  console.log(id);  
+  Blog.findByIdAndDelete(id)
+    .then( result => {
+      res.json({ redirect: '/blog'})
+    })
+    .catch( err => {
+      console.log('delete wala err', err)
+    })
 })
 
  
